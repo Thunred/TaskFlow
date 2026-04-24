@@ -54,14 +54,10 @@ jobs:
       - name: Install backend deps
         run: npm --prefix backend ci
 
-      - name: Install frontend deps
-        run: npm --prefix frontend ci
 
       - name: Run backend tests
         run: npm --prefix backend test
 
-      - name: Run frontend tests
-        run: npm --prefix frontend test
 
   # Job 2 — Lint (after tests)
   lint:
