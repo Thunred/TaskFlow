@@ -28,6 +28,20 @@ Alors que das le cas on-failure, si le code de sortie est 0, le serveur s'arrêt
 
 --- 
 
+## Choix 3 - Strategie de deploiement Kubernetes
+
+Nous avons choisi une strategie de rolling update avec `maxUnavailable: 0` et `maxSurge: 1` pour les environnements staging et production.
+
+Ce choix garantit qu'aucun pod existant n'est termine tant qu'un nouveau pod n'est pas pret, ce qui permet de limiter au maximum les interruptions de service. Avec `maxSurge: 1`, Kubernetes peut lancer temporairement un pod supplementaire pendant la mise a jour, puis remplacer progressivement les anciens pods une fois les nouveaux declarés Ready.
+
+En staging, ce choix est pertinent car il permet de tester les deploiements dans des conditions proches de la production, tout en conservant un comportement stable et previsible. En production, il est encore plus adapte car il privilegie la disponibilite du service au lieu de la vitesse de deploiement.
+
+L'inconvenient principal est une consommation temporaire de ressources un peu plus elevee pendant le rolling update, mais ce compromis est acceptable pour assurer un deploiement sans coupure.
+
+A l'oral, nous pouvons le prouver avec la commande `kubectl rollout status`, qui montre que Kubernetes remplace les pods progressivement sans interrompre le service.
+
+--- 
+
 ## Trivy
 
 Trivy a trouvé de nombreuses failles de sécurités avec les différentes versions de Node, ces nombreuses failles de sécurités nous ont dirigé sur les choix de la version de Node que nous avons pris. Et donc suite à l'analyse de Trivy et les erreurs de sécurités comme indiqué au dessus, nous avons choisi Node 20-alpine malgré son poids qui est une différence insignifiante considérant le nombre de faille trouvé sur le projet avec les versions précédentes. 
