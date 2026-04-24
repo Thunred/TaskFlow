@@ -22,8 +22,8 @@ spec:
     spec:
       containers:
       - name: backend
-        image: docker.io/thunred/stockalert-backend:v1.0.0
-        imagePullPolicy: Always
+        image: docker.io/thunred/taskflow-backend:v1.0.0
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3001
         envFrom:
