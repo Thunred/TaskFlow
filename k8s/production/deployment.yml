@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: docker.io/REPLACE_DOCKERHUB_USER/stockalert-backend:v1.0.0
+        image: docker.io/thunred/stockalert-backend:v1.0.0
         imagePullPolicy: Always
         ports:
         - containerPort: 3001

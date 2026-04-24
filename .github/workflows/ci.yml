@@ -137,11 +137,11 @@ jobs:
 
       - name: Build backend image
         run: |
-          docker build -f backend/Dockerfile -t ${{ secrets.DOCKERHUB_USERNAME }}/stockalert-backend:${{ steps.vars.outputs.tag }} backend
+          docker build -f backend/Dockerfile -t ${{ secrets.DOCKERHUB_USERNAME }}/taskflow-backend:${{ steps.vars.outputs.tag }} backend
 
       - name: Build frontend image
         run: |
-          docker build -f frontend/Dockerfile -t ${{ secrets.DOCKERHUB_USERNAME }}/stockalert-frontend:${{ steps.vars.outputs.tag }} frontend
+          docker build -f frontend/Dockerfile -t ${{ secrets.DOCKERHUB_USERNAME }}/taskflow-frontend:${{ steps.vars.outputs.tag }} frontend
 
       - name: Run Trivy scan on backend image (JSON)
         id: trivy
@@ -154,7 +154,7 @@ jobs:
             --output trivy-report-backend.json \
             --exit-code 1 \
             --severity CRITICAL \
-            ${{ secrets.DOCKERHUB_USERNAME }}/stockalert-backend:${{ steps.vars.outputs.tag }} || touch trivy.failed || true
+            ${{ secrets.DOCKERHUB_USERNAME }}/taskflow-backend:${{ steps.vars.outputs.tag }} || touch trivy.failed || true
 
       - name: Upload Trivy report
         if: always()
@@ -179,8 +179,8 @@ jobs:
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
           echo "${DOCKERHUB_TOKEN}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/stockalert-backend:${{ steps.vars.outputs.tag }}
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/stockalert-frontend:${{ steps.vars.outputs.tag }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/taskflow-backend:${{ steps.vars.outputs.tag }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/taskflow-frontend:${{ steps.vars.outputs.tag }}
 
   # Job 5 — Deploy staging (push staging only)
 
@@ -276,7 +276,7 @@ jobs:
           NS="${K8S_PRODUCTION_NAMESPACE:-production}"
           DEPLOYMENT="${K8S_DEPLOYMENT_NAME:-taskflow-backend}"
           CONTAINER="${K8S_CONTAINER_NAME:-backend}"
-          IMAGE="${DOCKERHUB_USERNAME}/stockalert-backend:${IMAGE_TAG}"
+          IMAGE="${DOCKERHUB_USERNAME}/taskflow-backend:${IMAGE_TAG}"
 
           echo "Updating ${DEPLOYMENT}/${CONTAINER} in namespace ${NS} to ${IMAGE}"
           kubectl -n "$NS" set image deployment/"$DEPLOYMENT" "$CONTAINER"="$IMAGE"
