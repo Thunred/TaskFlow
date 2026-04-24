@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "test": "node server.test.js",
-    "lint": "npx eslint server.js server.test.js"
+    "lint": "npx eslint server.js server.test.js",
+    "build": "mkdir -p dist && cp /app/server.js dist/server.js"
   },
   "eslintConfig": {
     "env": { "node": true, "es2021": true },

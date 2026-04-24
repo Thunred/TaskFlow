@@ -7,7 +7,7 @@ try { require("dotenv").config(); } catch { /* dotenv optionnel */ }
 const PORT        = process.env.PORT        || 3001;
 const APP_ENV     = process.env.APP_ENV     || "development";
 const APP_VERSION = process.env.APP_VERSION || "1.0.0";
-const REDIS_URL   = process.env.REDIS_URL   || "redis://127.0.0.1:6379";
+const REDIS_URL   = process.env.REDIS_URL   || "redis://127.0.0.1:639";
 
 const client = redis.createClient({ url: REDIS_URL });
 client.on("error", (err) => console.error("Redis error:", err.message));
