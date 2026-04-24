@@ -51,6 +51,20 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Wait for Redis to be ready
+        run: |
+          for i in $(seq 1 30); do
+            if bash -c "cat < /dev/tcp/127.0.0.1/6379 >/dev/null 2>&1"; then
+              echo "Redis is reachable"
+              break
+            fi
+            echo "Waiting for Redis... ($i/30)"
+            sleep 1
+          done
+          if ! bash -c "cat < /dev/tcp/127.0.0.1/6379 >/dev/null 2>&1"; then
+            echo "Redis did not start in time" && exit 1
+          fi
+
       - name: Install backend deps
         run: npm --prefix backend ci
 
