@@ -7,3 +7,4 @@ data:
   APP_ENV: staging
   APP_VERSION: staging
   PORT: "3001"
+  REDIS_URL: redis://cache:6379

@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: docker.io/thunred/taskflow-backend:v1.0.0
+        image: taskflow-backend:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3001
