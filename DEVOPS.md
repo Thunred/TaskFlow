@@ -27,3 +27,13 @@ Dans les cas unless stopped et always, le serveur redémarrera toujours si le se
 Alors que das le cas on-failure, si le code de sortie est 0, le serveur s'arrêtera même si c'est un crash, ce qui fais que nous avons moins de contrôle sur ces arrêts de serveurs inattendu là. 
 
 --- 
+
+## Trivy
+
+Trivy a trouvé de nombreuses failles de sécurités avec les différentes versions de Node, ces nombreuses failles de sécurités nous ont dirigé sur les choix de la version de Node que nous avons pris. Et donc suite à l'analyse de Trivy et les erreurs de sécurités comme indiqué au dessus, nous avons choisi Node 20-alpine malgré son poids qui est une différence insignifiante considérant le nombre de faille trouvé sur le projet avec les versions précédentes. 
+
+--- 
+
+## Difficulté rencontrée
+
+L'une des difficultés que nous avons rencontré est survenu lors de la mise en place de la pipeline CI/CD car elle lançait le serveur.js étant donné que nous pointions vers un serveur redis qui n'existait pas nous étions bloqué dans le job de test de la pipeline. 
